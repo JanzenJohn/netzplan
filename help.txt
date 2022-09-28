@@ -1,0 +1,6 @@
+usage
+
+./create.py [options]
+ -h                         displays this help
+ -i or --input  [filename]  specifies input (required)
+ -o or --output [filename]  specifies output (a .png for image .dot for graph description)
