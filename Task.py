@@ -19,6 +19,7 @@ class Task:
     def mark_as_end(self):
         self.sez = self.fez
         self.saz = self.sez - self.length
+        self.gp = 0
         self.from_down()
 
     def from_down(self):
@@ -30,11 +31,11 @@ class Task:
                 parent.sez = min(parent.sez, self.saz)
                 parent.saz = min(parent.sez - parent.length, self.saz)
 
-            parent.gp = parent.saz - parent.sez
+            parent.gp = parent.sez - parent.fez
 
             parent.from_down()
 
     def __repr__(self):
-        representation = f"{self.faz}, 0, {self.fez}\n"
+        representation = f"{self.faz}, {self.gp}, {self.fez}\n"
         representation += f"{self.saz}, 0, {self.sez}\n"
         return representation
