@@ -25,8 +25,6 @@ if ".dot" == out_file[-4:]:
     has_graphviz_disabled = True
 
 
-
-
 if not has_graphviz_disabled:
     with open("output.dot", "w") as f:
         f.write(convert_csv_to_flowchart(in_file))

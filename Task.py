@@ -47,32 +47,32 @@ class Task:
 def convert_csv_to_flowchart(filename):
     reader = csv.reader(open(filename))
     flow_chart = "digraph {\n"
-    to_be_filed = {x[0]: x for x in reader}
+    to_be_filed = {x[0]: x for x in reader}  # creates a dict in the structure of {task_name: csv_row}
     index = {}
-    child_free = []
-    parent_free = []
     while len(to_be_filed) != 0:
+
+        # loops through to_be_filed without changes impacting the loop
         for child, row in {x: y for x, y in to_be_filed.items()}.items():
-            # check if all dependecies have been made yet
+
+            # dep_list is a list of all our parents
+            # check if all our parents have been created yet (as we need their self.fez to create ourselves
             dep_list = row[2].split(",")
             dep_list = dep_list if dep_list[0] else []
             depend = all(map(lambda x: x in index, dep_list))
             if not depend:
                 continue
-            if not dep_list:
-                parent_free.append(row[0])
-            if not row[3]:
-                child_free.append(row[0])
 
             to_be_filed.pop(child)
-            parents = [index[x] for x in index if x in dep_list]
+
+            # draw a connection from all our parents to us
             for x in dep_list:
                 flow_chart += f"{x}->{child}\n"
+
+            parents = [index[x] for x in index if x in dep_list]
             index[row[0]] = Task(int(row[1]), child, parents)
 
-    for x in index:
-        if x in child_free:
-            index[x].mark_as_end()
+            if not row[3]:  # row[3] is the place for children so if we don't have children we are one endpoint
+                index[row[0]].mark_as_end()
 
     for x in index:
         flow_chart += f"{x} [label=\"{index[x]}\"]\n"
