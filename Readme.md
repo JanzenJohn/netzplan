@@ -32,3 +32,6 @@ this creates an output image
 ./create.py --input input.csv --output out.dot
 ```
 this creates an output dotfile
+
+## example output
+![out](https://user-images.githubusercontent.com/51709412/192847416-fc20051a-377c-48d2-9330-0692bfbaca66.png)
